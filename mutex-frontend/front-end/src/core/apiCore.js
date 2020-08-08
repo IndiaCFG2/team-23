@@ -29,6 +29,23 @@ export const getUsers = (token) => {
     .catch((err) => console.log(err));
 };
 
+export const getUsersStrict = (token) => {
+  console.log("its coming here");
+  console.log(token);
+  return fetch(`${API}/users/?role=3`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const getSubjects = (token) => {
   return fetch(`${API}/subject`, {
     method: "GET",
@@ -71,4 +88,48 @@ export const getPeriod = (id) => {
       Authorization: `${token}`,
     },
   }).catch((err) => console.log(err));
+};
+
+export const getGrades = (token) => {
+  return fetch(`${API}/grade`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+export const getPeriods = (token) => {
+  return fetch(`${API}/period`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+export const getPeriodsByTeacher = (token, teacher_id) => {
+  return fetch(`${API}/period/`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      console.log("HERE");
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };

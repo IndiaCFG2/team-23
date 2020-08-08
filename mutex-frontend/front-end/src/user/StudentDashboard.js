@@ -14,11 +14,18 @@ const StudentDashboard = () => {
   const periods = getSubjectsPeriods();
   const class_ids = periods.data.filter(item => item.user_id == _id);
   const periods_of_student;
-  
+
   class_ids.forEach(element => {
     const p =  getPeriod(element);
     periods_of_student.push(p);
     console.log(p);
+  });
+
+
+  //all assessments
+  const assessments = getAssessments();
+  class_ids.forEach(element => {
+    //   const a = assessments.data.filter(item => item.)
   });
 
 

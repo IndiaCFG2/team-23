@@ -3,7 +3,12 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createTeacher } from "./apiAdmin";
-import { getSchools, getUsers, getSubjects } from "../core/apiCore";
+import {
+  getSchools,
+  getUsers,
+  getUsersStrict,
+  getSubjects,
+} from "../core/apiCore";
 const AddTeacher = () => {
   const [values, setValues] = useState({
     users: [],
@@ -37,7 +42,7 @@ const AddTeacher = () => {
 
   // load  and set form data
   const init = () => {
-    getUsers(token).then((usersResponse) => {
+    getUsersStrict(token).then((usersResponse) => {
       // console.log( 'getUsers Response', values);
       if (usersResponse.error) {
         setValues({ ...values, error: usersResponse.error });

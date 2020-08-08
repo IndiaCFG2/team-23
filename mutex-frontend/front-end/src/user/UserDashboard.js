@@ -8,9 +8,8 @@ const Dashboard = () => {
     const [history, setHistory] = useState([]);
 
     const {
-        user: { _id, first_name,last_name, email, role }
+        user: { _id, first_name,last_name, email, role }, accessToken:token
     } = isAuthenticated();
-    const token = isAuthenticated().token;
 
     
 
