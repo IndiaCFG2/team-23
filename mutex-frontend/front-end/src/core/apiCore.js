@@ -79,7 +79,7 @@ export const getAssessments = (token) => {
   }).catch((err) => console.log(err));
 };
 
-export const getPeriod = (id) => {
+export const getPeriod = (token, id) => {
   return fetch(`${API}/period/${id}`, {
     method: "GET",
     headers: {
