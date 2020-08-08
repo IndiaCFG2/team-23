@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link } from 'react-router-dom';
-import {  getPeriods } from "../core/apiCore";
-import {createContent} from "./apiTeacher";
+import {  getPeriods, getPeriodsByTeacher } from "../core/apiCore";
+import {createContent,getTeacherByUserID} from "./apiTeacher";
+var teacher_id
 const AddContent = () => {
     const [values, setValues] = useState({
        
@@ -38,17 +39,21 @@ const AddContent = () => {
 
     // load  and set form data
     const init = () => {
-        getPeriods(token).then(periodsResponse => {
-            if (periodsResponse.error) {
-                setValues({ ...values, error: periodsResponse.error });
-            } else {
-                setValues({
-                    ...values,
-                    periods: periodsResponse.data
-                    
-                });
-            }
-        });
+        getTeacherByUserID(token, user._id).then(response => {
+            teacher_id = response.data[0]._id
+            getPeriodsByTeacher(token, teacher_id).then(periodsResponse => {
+                if (periodsResponse.error) {
+                    setValues({ ...values, error: periodsResponse.error });
+                } else {
+                    setValues({
+                        ...values,
+                        periods: periodsResponse.data
+                        
+                    });
+                }
+            });
+        })
+       
     };
 
         
