@@ -16,6 +16,8 @@ export const getContents = (token) => {
        };
 
 export const getUsers = (token) => {
+    console.log("its coming here")
+    console.log(token)
     return fetch(`${API}/users`, {
         method: "GET",
         headers: {

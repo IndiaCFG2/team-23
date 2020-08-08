@@ -1,6 +1,7 @@
 import { API } from '../config';
 
-export const createTeacher = (userId, token, teacher) => {
+export const createTeacher = ( token, teacher) => {
+    console.log(teacher)
     return fetch(`${API}/teacher`, {
         method: 'POST',
         headers: {
