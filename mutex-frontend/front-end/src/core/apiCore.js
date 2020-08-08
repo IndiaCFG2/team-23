@@ -105,23 +105,33 @@ export const getPeriods = (token) => {
             }
         })
             .then(response => {
-                return response.json();
+                const resp = response.json()
+                return resp;
             })
             .catch(err => console.log(err));
         };
+
+// const filterDataByTeacherId = (arrayVal, key,    teacher_id) => {
+//     return arrayVal[key] === val
+// }
 export const getPeriodsByTeacher = (token,teacher_id) => {
-    return fetch(`${API}/period/`, {
+    return fetch(`${API}/period`, {
         method: "GET",
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `${token}`
-                    
+                   
             }
         })
             .then(response => {
-                console.log('HERE')
-                return response.json();
+                const resp = response.json();
+                const data = resp.data.filter((value) => {
+                    return value.teacher_id === teacher_id
+                })
+                resp.data = data
+                return resp;
+
             })
             .catch(err => console.log(err));
         };
