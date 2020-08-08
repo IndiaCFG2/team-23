@@ -12,7 +12,7 @@ module.exports = function (app) {
       teacher_id: { type: Schema.ObjectId, ref: "teacher" },
       period_id: { type: Schema.ObjectId, ref: "period" },
       resource_url: { type: String, required: true },
-      assessment_deadline: { type: Date, required: true },
+      assessment_deadline: { type: Date},
     },
     {
       timestamps: true,

@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link } from 'react-router-dom';
-import { createTeacher } from "./apiAdmin";
-import { getSchools ,getUsers,getUsersStrict,getSubjects} from "../core/apiCore";
-const AddTeacher = () => {
+import { createdStudent, createStudent } from "./apiAdmin";
+import { getSchools ,getUsersStrict, getGrades} from "../core/apiCore";
+const AddStudent = () => {
     const [values, setValues] = useState({
        
         users: [],
         user_one: '',
-        subjects:[],
-        subject:"",
+        grades:[],
+        grade:"",
         schools:[],
         school:"",
         loading: false,
         error: '',
-        createdTeacher: '',
+        createdStudent: '',
         redirectToProfile: false,
     });
     var formData ={}
@@ -26,13 +26,13 @@ const AddTeacher = () => {
     const {
         users,
         user_one,
-        subjects,
-        subject,
+        grades,
+        grade,
         schools,
         school,
         loading,
         error,
-        createdTeacher,
+        createdStudent,
         redirectToProfile,
     } = values;
 
@@ -49,16 +49,16 @@ const AddTeacher = () => {
                     if (schoolsResponse.error) {
                         setValues({ ...values, error: schoolsResponse.error });
                     } else{
-                        getSubjects(token).then(subjectsResponse => {
+                        getGrades(token).then(gradesResponse => {
                             // console.log( 'getSubjects Response', values)
-                            if (subjectsResponse.error) {
-                                setValues({ ...values, error: subjectsResponse.error });
+                            if (gradesResponse.error) {
+                                setValues({ ...values, error: gradesResponse.error });
                             } else {
                                 setValues({
                                     ...values,
-                                    subjects: subjectsResponse.data,
+                                    schools: schoolsResponse.data,
                                     users: usersResponse.data,
-                                    schools: schoolsResponse.data
+                                    grades: gradesResponse.data
                                 });
                             }
                         });
@@ -73,76 +73,15 @@ const AddTeacher = () => {
             }
         });
 
-        // getSchools(token).then(response => {
-        //     console.log( 'getSchools Response', values);
-        //     if (response.error) {
-        //         setValues({ ...values, error: response.error });
-        //     } else {
-        //         setValues({
-        //             ...values,
-        //             schools: response.data,
-        //         });
-        //     }
-        // });
-        // getSubjects(token).then(response => {
-        //     console.log( 'getSubjects Response', values)
-        //     if (response.error) {
-        //         setValues({ ...values, error: response.error });
-        //     } else {
-        //         setValues({
-        //             ...values,
-        //             subjects: response.data,
-        //         });
-        //     }
-        // });
+       
 
     };
 
     useEffect(() => {
         init();
-        // getUsers(token).then(response => {
-        //     console.log( 'getUsers Response', values);
-        //     if (response.error) {
-        //         setValues({ ...values, error: response.error });
-        //     } else {
-        //         console.log(response);
-        //         setValues({
-        //             ...values,
-        //             users: response.data
-                    
-        //         });
-        //     }
-        // });
     }, []);
 
-    // useEffect(() => {
-    //     getSchools(token).then(response => {
-    //         console.log( 'getSchools Response', values);
-    //         if (response.error) {
-    //             setValues({ ...values, error: response.error });
-    //         } else {
-    //             setValues({
-    //                 ...values,
-    //                 schools: response.data,
-    //             });
-    //         }
-    //     });
-    // }, []);
-
-    // useEffect(() => {
-    //     // init();
-    //     getSubjects(token).then(response => {
-    //         console.log( 'getSubjects Response', values)
-    //         if (response.error) {
-    //             setValues({ ...values, error: response.error });
-    //         } else {
-    //             setValues({
-    //                 ...values,
-    //                 subjects: response.data,
-    //             });
-    //         }
-    //     });
-    // }, []);
+    
 
     const handleChange = name => event => {
         const value =  event.target.value;
@@ -153,8 +92,8 @@ const AddTeacher = () => {
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
-        formData.role = 1;
-        createTeacher( token, formData).then(data => {
+        formData.role = 2;
+        createStudent( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -164,7 +103,7 @@ const AddTeacher = () => {
                     school: '',
                     subject: '',
                     loading: false,
-                    createdTeacher: "Teacher is created"
+                    createdStudent: "Student is created"
                 });
             }
         });
@@ -198,11 +137,11 @@ const AddTeacher = () => {
                 </select>
             </div>
             <div className="form-group">
-                <label className="text-muted">Select Subject</label>
-                <select onChange={handleChange('subject_id')} className="form-control">
+                <label className="text-muted">Select Grade</label>
+                <select onChange={handleChange('grade_id')} className="form-control">
                     <option>Please select</option>
-                    {subjects &&
-                        subjects.map((c, i) => (
+                    {grades &&
+                        grades.map((c, i) => (
                             <option key={i} value={c._id}>
                                 {c.name}
                             </option>
@@ -214,7 +153,7 @@ const AddTeacher = () => {
             
             
 
-            <button className="btn btn-outline-primary">Create Teacher</button>
+            <button className="btn btn-outline-primary">Create Student</button>
         </form>
     );
 
@@ -225,8 +164,8 @@ const AddTeacher = () => {
     );
 
     const showSuccess = () => (
-        <div className="alert alert-info" style={{ display: createdTeacher ? '' : 'none' }}>
-            <h2>{`${createdTeacher}`} !</h2>
+        <div className="alert alert-info" style={{ display: createdStudent ? '' : 'none' }}>
+            <h2>{`Student Created`} !</h2>
         </div>
     );
 
@@ -238,7 +177,7 @@ const AddTeacher = () => {
         );
 
     return (
-        <Layout title="Add a new teacher" description={`G'day ${user.first_name}, ready to add a new teacher?`}>
+        <Layout title="Add a new Student" description={`G'day ${user.first_name}, ready to add a new Student?`}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     {showLoading()}
@@ -251,4 +190,4 @@ const AddTeacher = () => {
     );
 };
 
-export default AddTeacher;
+export default AddStudent;
