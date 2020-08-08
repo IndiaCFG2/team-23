@@ -1,8 +1,13 @@
 import { API } from "../config";
 
-export const getContents = sortBy => {
+export const getContents = (token) => {
     return fetch(`${API}/content`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+             Authorization: `${token}`
+        }
     })
         .then(response => {
             return response.json();
@@ -10,9 +15,14 @@ export const getContents = sortBy => {
         .catch(err => console.log(err));
        };
 
-export const getUsers = () => {
+export const getUsers = (token) => {
     return fetch(`${API}/users`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+             Authorization: `${token}`
+        }
     })
         .then(response => {
             return response.json();
@@ -20,9 +30,14 @@ export const getUsers = () => {
         .catch(err => console.log(err));
     };
 
-export const getSubjects = () => {
+export const getSubjects = (token) => {
     return fetch(`${API}/subject`, {
-         method: "GET"
+         method: "GET",
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+             Authorization: `${token}`
+        }
     })
         .then(response => {
             return response.json();
@@ -30,9 +45,14 @@ export const getSubjects = () => {
         .catch(err => console.log(err));
     };
 
-export const getSchools = () => {
+export const getSchools = (token) => {
     return fetch(`${API}/school`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+             Authorization: `${token}`
+        }
     })
         .then(response => {
             return response.json();
