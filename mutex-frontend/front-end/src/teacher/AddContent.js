@@ -66,8 +66,9 @@ const AddContent = () => {
 
     const handleChange = name => event => {
         const value =  event.target.value;
+       
         formData[name] = value; 
-        // setValues({ ...values, formData:value });
+        setValues({ ...values, formData:value ,[name]: event.target.value});
     };
 
     const clickSubmit = event => {
@@ -108,7 +109,12 @@ const AddContent = () => {
             
             <div className="form-group">
                 <label className="text-muted">Topic</label>
-                <input onChange={handleChange('topic')} type="text" className="form-control" value={topic} />
+                <input
+                    onChange={handleChange("topic")}
+                    type="text"
+                    className="form-control"
+                    value={topic}
+                />
             </div>
             <div className="form-group">
                 <label className="text-muted"> Resource URL</label>

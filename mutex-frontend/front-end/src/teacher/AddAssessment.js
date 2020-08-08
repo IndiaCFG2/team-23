@@ -70,7 +70,7 @@ const AddAssessment = () => {
     const handleChange = name => event => {
         const value =  event.target.value;
         formData[name] = value; 
-        // setValues({ ...values, formData:value });
+        setValues({ ...values, formData:value ,[name]: event.target.value});
     };
 
     const clickSubmit = event => {
