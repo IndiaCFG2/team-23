@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-import { API } from "../config";
-import { isAuthenticated } from "../auth";
-import { getSchools } from "../core/apiCore";
-
-const { user } = isAuthenticated();
-const { school } = getSchools();
-
-export const createStudent = (userId, token, student) => {
-  student.user_id = user._id;
-  student.school_id = school._id;
-  student.grant_id = 1;
-
-  return fetch(`${API}/student`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `${token}`,
-    },
-    body: JSON.stringify(teacher),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-=======
 import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
@@ -221,4 +191,3 @@ const AddStudent = () => {
 };
 
 export default AddStudent;
->>>>>>> d451d8ec2a8d1eb601ae0672afe2bc14331fc0a5
