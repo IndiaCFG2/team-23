@@ -1,11 +1,11 @@
 import { API } from "../config";
 
-export const getContents = sortBy => {
-    return fetch(`${API}/contents`, {
-        method: "GET"
+export const getContents = (sortBy) => {
+  return fetch(`${API}/contents`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
     })
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => console.log(err));
-       }
+    .catch((err) => console.log(err));
+};
