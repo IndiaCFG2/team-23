@@ -3,31 +3,35 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 
-import { getSubjectsPeriods, getPeriod } from "../core/apiCore";
+import { getStudentsPeriods, getPeriod } from "../core/apiCore";
 
 const StudentDashboard = () => {
   const {
     user: { _id, email, role, first_name, last_name, phonenumber },
   } = isAuthenticated();
 
-  //all periods 
-  const periods = getSubjectsPeriods();
-  const class_ids = periods.data.filter(item => item.user_id == _id);
-  const periods_of_student;
+  //all periods
+  const periods = getStudentsPeriods();
+  const class_ids = periods.data.filter((item) => item.user_id == _id);
+  var periods_of_student = [];
 
-  class_ids.forEach(element => {
-    const p =  getPeriod(element);
+  class_ids.forEach((element) => {
+    const p = getPeriod(element);
     periods_of_student.push(p);
     console.log(p);
   });
 
-
   //all assessments
+  var student_assessments = [];
   const assessments = getAssessments();
-  class_ids.forEach(element => {
-    //   const a = assessments.data.filter(item => item.)
+  class_ids.forEach((element) => {
+    const a = assessments.data.filter(
+      (item) => item.class_id.indexOf(class_ids) > -1
+    );
+    if (a != null) {
+      student_assessments.push(a);
+    }
   });
-
 
   const studentPeriods = () => {
     return (
@@ -35,10 +39,8 @@ const StudentDashboard = () => {
         <h4 className="card-header">Student Links</h4>
         <ul className="list-group">
           <li className="list-group-item">
-            {periods_of_student.map(period => (
-                <p className="">
-                    {period}
-                </p>
+            {periods_of_student.map((period) => (
+              <p className="">{period.name}</p>
             ))}
           </li>
         </ul>
@@ -52,10 +54,8 @@ const StudentDashboard = () => {
         <h4 className="card-header">Student Links</h4>
         <ul className="list-group">
           <li className="list-group-item">
-            {periods_of_student.map(period => (
-                <p className="">
-                    {period}
-                </p>
+            {student_assessments.map((assessment) => (
+              <p className="">{assessment_name}</p>
             ))}
           </li>
         </ul>
@@ -87,6 +87,7 @@ const StudentDashboard = () => {
       <div className="row">
         <div className="col-3">{studentPeriods()}</div>
         <div className="col-9">{studentInfo()}</div>
+        <div className="col-12">{studentAssessments()}</div>
       </div>
     </Layout>
   );

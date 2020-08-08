@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link } from 'react-router-dom';
-import { getSchools ,getUsers,getSubjects, getGrades,getPeriods} from "../core/apiCore";
+import { getSchools ,getUsers,getSubjects, getGrades,getPeriods, getPeriodsByTeacher} from "../core/apiCore";
 import {getTeacherByUserID ,createAssessment} from "./apiTeacher"
+var teacher_id
 const AddAssessment = () => {
-   
     const [values, setValues] = useState({
         name:"",
         periods:[],
@@ -20,10 +20,7 @@ const AddAssessment = () => {
     var formData ={}
     const {accessToken:token, user} = isAuthenticated()
     console.log('user._id)',user._id)
-    const {_id:teacher_id} = getTeacherByUserID(token, user._id);
-    // const { user } = user_data.user
-    // const{token} = user_data.accessToken
-    // console.log(token, user)
+    
     const {
         resource_url,
         assessment_name,
@@ -41,25 +38,23 @@ const AddAssessment = () => {
         
 
         const init = () => {
-            getPeriods(token).then(periodsResponse => {
-                if (periodsResponse.error) {
-                    setValues({ ...values, error: periodsResponse.error });
-                } else {
-                    setValues({
-                        ...values,
-                        periods: periodsResponse.data
-                        
-                    });
-                }
-            });
+            getTeacherByUserID(token, user._id).then(response => {
+                teacher_id = response.data[0]._id
+                getPeriodsByTeacher(token, teacher_id).then(periodsResponse => {
+                    console.log(periodsResponse)
+                    if (periodsResponse.error) {
+                        setValues({ ...values, error: periodsResponse.error });
+                    } else {
+                        setValues({
+                            ...values,
+                            periods: periodsResponse.data
+                            
+                        });
+                    }
+                });
+            })
+           
         };
-                // console.log(response);
-                // setValues({
-                //     ...values,
-                //     users: response.data
-                    
-                // });
-        
 
        
 
@@ -81,7 +76,7 @@ const AddAssessment = () => {
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
-        formData["teacher_id"]= teacher_id;
+        // formData["teacher_id"]= teacher_id;
         createAssessment( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
@@ -115,7 +110,7 @@ const AddAssessment = () => {
                     {periods &&
                         periods.map((c, i) => (
                             <option key={i} value={c._id}>
-                                {c.first_name}
+                                {c.name}
                             </option>
                         ))}
                 </select>

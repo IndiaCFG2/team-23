@@ -137,3 +137,19 @@ export const getPeriodsByTeacher = async (token,teacher_id) => {
             // })
             // .catch(err => console.log(err));
         };
+
+        export const getStudentsPeriods = (token) => {
+            return fetch(`${API}/subject-period/`, {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `${token}`,
+              },
+            })
+              .then((response) => {
+                console.log("HERE");
+                return response.json();
+              })
+              .catch((err) => console.log(err));
+          };
