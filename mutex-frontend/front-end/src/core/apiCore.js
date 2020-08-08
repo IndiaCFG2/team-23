@@ -114,8 +114,8 @@ export const getPeriods = (token) => {
 // const filterDataByTeacherId = (arrayVal, key,    teacher_id) => {
 //     return arrayVal[key] === val
 // }
-export const getPeriodsByTeacher = (token,teacher_id) => {
-    return fetch(`${API}/period`, {
+export const getPeriodsByTeacher = async (token,teacher_id) => {
+    const response = await fetch(`${API}/period?teacher_id=${teacher_id}`, {
         method: "GET",
         headers: {
             Accept: 'application/json',
@@ -124,14 +124,16 @@ export const getPeriodsByTeacher = (token,teacher_id) => {
                    
             }
         })
-            .then(response => {
-                const resp = response.json();
-                const data = resp.data.filter((value) => {
-                    return value.teacher_id === teacher_id
-                })
-                resp.data = data
-                return resp;
+        const jsonResponse = await response.json()
+        return jsonResponse;
+            // .then(response => {
+            //     const resp = response.json();
+            //     // const data = resp.data.filter((value) => {
+            //     //     return value.teacher_id === teacher_id
+            //     // })
+            //     // resp.data = data
+            //     return resp;
 
-            })
-            .catch(err => console.log(err));
+            // })
+            // .catch(err => console.log(err));
         };

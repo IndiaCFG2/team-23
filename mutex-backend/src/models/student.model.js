@@ -11,7 +11,6 @@ module.exports = function (app) {
       user_id: { type: Schema.ObjectId, ref: "users" },
       school_id: { type: Schema.ObjectId, ref: "school" },
       grade_id: { type: Schema.ObjectId, ref: "grade" },
-      subject_id: { type: Schema.ObjectId, ref: "subject" },
     },
     {
       timestamps: true,
