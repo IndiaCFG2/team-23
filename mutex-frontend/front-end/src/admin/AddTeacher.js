@@ -115,34 +115,34 @@ const AddTeacher = () => {
         // });
     }, []);
 
-    useEffect(() => {
-        getSchools(token).then(response => {
-            console.log( 'getSchools Response', values);
-            if (response.error) {
-                setValues({ ...values, error: response.error });
-            } else {
-                setValues({
-                    ...values,
-                    schools: response.data,
-                });
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     getSchools(token).then(response => {
+    //         console.log( 'getSchools Response', values);
+    //         if (response.error) {
+    //             setValues({ ...values, error: response.error });
+    //         } else {
+    //             setValues({
+    //                 ...values,
+    //                 schools: response.data,
+    //             });
+    //         }
+    //     });
+    // }, []);
 
-    useEffect(() => {
-        // init();
-        getSubjects(token).then(response => {
-            console.log( 'getSubjects Response', values)
-            if (response.error) {
-                setValues({ ...values, error: response.error });
-            } else {
-                setValues({
-                    ...values,
-                    subjects: response.data,
-                });
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     // init();
+    //     getSubjects(token).then(response => {
+    //         console.log( 'getSubjects Response', values)
+    //         if (response.error) {
+    //             setValues({ ...values, error: response.error });
+    //         } else {
+    //             setValues({
+    //                 ...values,
+    //                 subjects: response.data,
+    //             });
+    //         }
+    //     });
+    // }, []);
 
     const handleChange = name => event => {
         const value =  event.target.value;
