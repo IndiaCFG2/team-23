@@ -53,6 +53,7 @@
     "mongodb-core": "^3.2.7",
     "mongoose": "^5.9.28",
     "serve-favicon": "^2.5.0",
+    "twilio": "^3.48.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { API } from "../config";
-import { TWILIO_API } from "../../public/twilio";
+// import { TWILIO_API } from "../twilio";
 
 export const getContents = (token) => {
   return fetch(`${API}/content`, {
@@ -51,16 +51,24 @@ export const getSchools = (token) => {
   }).catch((err) => console.log(err));
 };
 
-export const sendWhatsAppMsg = (assessment_name, reource_) => {
-  const accountSid = "ACbe384e6ff5c49b07fe9293233ef51ec7";
-  const authToken = TWILIO_API;
-  const client = require("twilio")(accountSid, authToken);
+export const getAssessments = (token) => {
+  return fetch(`${API}/assessment`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  }).catch((err) => console.log(err));
+};
 
-  client.messages
-    .create({
-      body: "This is the ship that made the Kessel Run in fourteen parsecs?",
-      from: "+15017122661",
-      to: "+917799999861",
-    })
-    .then((message) => console.log(message.sid));
+export const getPeriod = (id) => {
+  return fetch(`${API}/period/${id}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  }).catch((err) => console.log(err));
 };
