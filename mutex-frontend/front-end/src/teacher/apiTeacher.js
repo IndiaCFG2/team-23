@@ -2,9 +2,9 @@ import { API } from "../config";
 import { isAuthenticated } from "../auth";
 import { getSchools } from "../core/apiCore";
 
-const { user } = isAuthenticated();
-const { schools } = getSchools();
-const {grades}
+// const { user } = isAuthenticated();
+// const { schools } = getSchools();
+// const {grades}
 
 export const createStudent = (user_id, token, school_id, grade_id) => {
   student.user_id = user_id;
