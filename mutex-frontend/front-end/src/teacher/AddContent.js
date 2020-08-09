@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import {  getPeriods, getPeriodsByTeacher } from "../core/apiCore";
 import {createContent,getTeacherByUserID} from "./apiTeacher";
 var teacher_id
+var formData ={}
+
 const AddContent = () => {
     const [values, setValues] = useState({
        
@@ -19,7 +21,6 @@ const AddContent = () => {
         createdContent: '',
         redirectToProfile: false,
     });
-    var formData ={}
     const {accessToken:token, user} = isAuthenticated()
     // const { user } = user_data.user
     // const{token} = user_data.accessToken
@@ -66,15 +67,21 @@ const AddContent = () => {
 
     const handleChange = name => event => {
         const value =  event.target.value;
-       
+        console.log(value)
         formData[name] = value; 
-        setValues({ ...values, formData:value ,[name]: event.target.value});
+        setValues({ ...values ,[name]: event.target.value});
     };
+
+    const asaa = setTimeout(() => {
+        console.log(formData)
+    }, 5000)
 
     const clickSubmit = event => {
         event.preventDefault();
-        setValues({ ...values, error: '', loading: true });
+        console.log(formData)
+        // setValues({ ...values, error: '', loading: true });
         formData['user_id'] = user._id;
+        console.log(1,formData)
         createContent( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
@@ -82,8 +89,6 @@ const AddContent = () => {
                 setValues({
                     ...values,
                     period_id: '',
-                    topic: '',
-                    resource_url: '',
                     loading: false,
                     createdContent: "Content is created"
                 });

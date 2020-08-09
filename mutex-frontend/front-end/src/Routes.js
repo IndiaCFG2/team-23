@@ -13,9 +13,11 @@ import AddTeacher from "./admin/AddTeacher";
 import AddStudent from "./admin/AddStudent";
 import TeacherRoute from "./auth/TeacherRoute";
 import ATRoute from "./auth/ATRoute";
-
 import AddAssessment from "./teacher/AddAssessment";
 import AddClass from "./teacher/AddClass";
+import showAssesments from "./teacher/showAssessments"
+import showContents from "./teacher/showContent"
+import ShareResources from "./teacher/ShareResources"
 
 const Routes = () => {
   return (
@@ -29,6 +31,9 @@ const Routes = () => {
         <AdminRoute path="/create/teacher" exact component={AddTeacher} />
         <ATRoute path="/create/student" exact component={AddStudent} />
         <TeacherRoute path="/create/content" exact component={AddContents} />
+        <TeacherRoute path="/contents" exact component={showContents} />
+        <TeacherRoute path="/assessments" exact component={showAssesments} />
+        <TeacherRoute path="/share" exact component={ShareResources} />
         <TeacherRoute
           path="/create/assessment"
           exact
