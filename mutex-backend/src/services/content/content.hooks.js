@@ -106,13 +106,13 @@ module.exports = {
 
         users_numbers.forEach((item) => {
           console.log(context.result.topic, context.result.resource_url, item);
-          // sendMsg(context.result.topic, context.result.resource_url, item);
+          sendMsg(context.result.topic, context.result.resource_url, item);
           const content =
             "Hello, New content added [" +
             context.result.topic +
             "], please check-out at: " +
             context.result.resource_url;
-          // sendWhatsappMessage(content);
+          sendWhatsappMessage(content);
           sendSMS(content);
         });
 

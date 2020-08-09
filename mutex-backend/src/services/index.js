@@ -10,6 +10,7 @@ const studentAssessment = require('./student-assessment/student-assessment.servi
 const content = require('./content/content.service.js');
 const school = require('./school/school.service.js');
 const teacherClass = require('./teacher-class/teacher-class.service.js');
+const sendNotifications = require('./send-notifications/send-notifications.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -24,4 +25,5 @@ module.exports = function (app) {
   app.configure(content);
   app.configure(school);
   app.configure(teacherClass);
+  app.configure(sendNotifications);
 };

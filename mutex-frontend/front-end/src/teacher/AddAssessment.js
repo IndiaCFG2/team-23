@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getSchools ,getUsers,getSubjects, getGrades,getPeriods, getPeriodsByTeacher} from "../core/apiCore";
 import {getTeacherByUserID ,createAssessment} from "./apiTeacher"
 var teacher_id
+var formData = {}
 const AddAssessment = () => {
     const [values, setValues] = useState({
         name:"",
@@ -17,7 +18,6 @@ const AddAssessment = () => {
         createdClass: '',
         redirectToProfile: false,
     });
-    var formData ={}
     const {accessToken:token, user} = isAuthenticated()
     console.log('user._id)',user._id)
     
@@ -70,13 +70,13 @@ const AddAssessment = () => {
     const handleChange = name => event => {
         const value =  event.target.value;
         formData[name] = value; 
-        // setValues({ ...values, formData:value });
+        setValues({ ...values, formData:value ,[name]: event.target.value});
     };
 
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
-        // formData["teacher_id"]= teacher_id;
+        formData["teacher_id"]= teacher_id;
         createAssessment( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
@@ -134,7 +134,7 @@ const AddAssessment = () => {
 
     const showSuccess = () => (
         <div className="alert alert-info" style={{ display: createdAssessment ? '' : 'none' }}>
-            <h2>createAssessment !</h2>
+            <h2>created Assessment !</h2>
         </div>
     );
 
@@ -146,7 +146,7 @@ const AddAssessment = () => {
         );
 
     return (
-        <Layout title="Add a new class" description={`G'day ${user.first_name}, ready to add a new assessment?`}>
+        <Layout title="Add a new assessment" description={`G'day ${user.first_name}, ready to add a new assessment?`}>
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     {showLoading()}

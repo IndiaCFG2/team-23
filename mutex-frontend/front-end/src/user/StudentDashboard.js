@@ -3,12 +3,10 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { getStudentsPeriods, getPeriod, getAssessments } from "../core/apiCore";
-
 const StudentDashboard = () => {
   const {
     user: { _id, email, role, first_name, last_name, phonenumber },
   } = isAuthenticated();
-
   const [values, setValues] = useState({
     name: "",
     periods: [],

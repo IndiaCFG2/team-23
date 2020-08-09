@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link } from 'react-router-dom';
-import {  getPeriods } from "../core/apiCore";
-import {createContent} from "./apiTeacher";
+import {  getPeriods, getPeriodsByTeacher } from "../core/apiCore";
+import {createContent,getTeacherByUserID} from "./apiTeacher";
+var teacher_id
+var formData ={}
+
 const AddContent = () => {
     const [values, setValues] = useState({
        
@@ -18,7 +21,6 @@ const AddContent = () => {
         createdContent: '',
         redirectToProfile: false,
     });
-    var formData ={}
     const {accessToken:token, user} = isAuthenticated()
     // const { user } = user_data.user
     // const{token} = user_data.accessToken
@@ -38,17 +40,21 @@ const AddContent = () => {
 
     // load  and set form data
     const init = () => {
-        getPeriods(token).then(periodsResponse => {
-            if (periodsResponse.error) {
-                setValues({ ...values, error: periodsResponse.error });
-            } else {
-                setValues({
-                    ...values,
-                    periods: periodsResponse.data
-                    
-                });
-            }
-        });
+        getTeacherByUserID(token, user._id).then(response => {
+            teacher_id = response.data[0]._id
+            getPeriodsByTeacher(token, teacher_id).then(periodsResponse => {
+                if (periodsResponse.error) {
+                    setValues({ ...values, error: periodsResponse.error });
+                } else {
+                    setValues({
+                        ...values,
+                        periods: periodsResponse.data
+                        
+                    });
+                }
+            });
+        })
+       
     };
 
         
@@ -61,14 +67,21 @@ const AddContent = () => {
 
     const handleChange = name => event => {
         const value =  event.target.value;
+        console.log(value)
         formData[name] = value; 
-        // setValues({ ...values, formData:value });
+        setValues({ ...values ,[name]: event.target.value});
     };
+
+    const asaa = setTimeout(() => {
+        console.log(formData)
+    }, 5000)
 
     const clickSubmit = event => {
         event.preventDefault();
-        setValues({ ...values, error: '', loading: true });
+        console.log(formData)
+        // setValues({ ...values, error: '', loading: true });
         formData['user_id'] = user._id;
+        console.log(1,formData)
         createContent( token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
@@ -76,8 +89,6 @@ const AddContent = () => {
                 setValues({
                     ...values,
                     period_id: '',
-                    topic: '',
-                    resource_url: '',
                     loading: false,
                     createdContent: "Content is created"
                 });
@@ -103,7 +114,12 @@ const AddContent = () => {
             
             <div className="form-group">
                 <label className="text-muted">Topic</label>
-                <input onChange={handleChange('topic')} type="text" className="form-control" value={topic} />
+                <input
+                    onChange={handleChange("topic")}
+                    type="text"
+                    className="form-control"
+                    value={topic}
+                />
             </div>
             <div className="form-group">
                 <label className="text-muted"> Resource URL</label>
