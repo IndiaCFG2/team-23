@@ -76,6 +76,24 @@ const TeacherDashboard = () => {
             </li>
           </ul>
         </div>
+        <div className="card">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <Link className="nav-link" to="/contents">
+                My Content
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="card">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <Link className="nav-link" to="/share">
+                share resources
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   };
