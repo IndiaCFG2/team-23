@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isAuthenticated } from "./index";
+import { isAuthenticated } from "../auth/index";
 
-const AdminRoute = ({ component: Component, ...rest }) => (
+const StudentRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isAuthenticated() && isAuthenticated().user.role === 0 ? (
+      isAuthenticated() && isAuthenticated().user.role == 2 ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -20,4 +20,4 @@ const AdminRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-export default AdminRoute;
+export default StudentRoute;

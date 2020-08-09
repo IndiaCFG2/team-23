@@ -1,5 +1,4 @@
 import { API } from "../config";
-// import { TWILIO_API } from "../twilio";
 
 export const getContents = (token) => {
   return fetch(`${API}/content`, {
@@ -9,7 +8,11 @@ export const getContents = (token) => {
       "Content-Type": "application/json",
       Authorization: `${token}`,
     },
-  }).catch((err) => console.log(err));
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
 
 export const getUsers = (token) => {
@@ -54,7 +57,11 @@ export const getSubjects = (token) => {
       "Content-Type": "application/json",
       Authorization: `${token}`,
     },
-  }).catch((err) => console.log(err));
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
 
 export const getSchools = (token) => {
@@ -65,7 +72,11 @@ export const getSchools = (token) => {
       "Content-Type": "application/json",
       Authorization: `${token}`,
     },
-  }).catch((err) => console.log(err));
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
 
 export const getAssessments = (token) => {
@@ -114,28 +125,40 @@ export const getPeriods = (token) => {
     },
   })
     .then((response) => {
-      return response.json();
-    })
-    .catch((err) => console.log(err));
-};
-export const getPeriodsByTeacher = (token, teacher_id) => {
-  return fetch(`${API}/period/`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `${token}`,
-    },
-  })
-    .then((response) => {
-      console.log("HERE");
-      return response.json();
+      const resp = response.json();
+      return resp;
     })
     .catch((err) => console.log(err));
 };
 
-export const getStudentsPeriods = (token) => {
-  return fetch(`${API}/subject-period/`, {
+// const filterDataByTeacherId = (arrayVal, key,    teacher_id) => {
+//     return arrayVal[key] === val
+// }
+export const getPeriodsByTeacher = async (token, teacher_id) => {
+  const response = await fetch(`${API}/period?teacher_id=${teacher_id}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  });
+  const jsonResponse = await response.json();
+  return jsonResponse;
+  // .then(response => {
+  //     const resp = response.json();
+  //     // const data = resp.data.filter((value) => {
+  //     //     return value.teacher_id === teacher_id
+  //     // })
+  //     // resp.data = data
+  //     return resp;
+
+  // })
+  // .catch(err => console.log(err));
+};
+
+export const getStudentsPeriods = async (token) => {
+  return await fetch(`${API}/student-class`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -144,7 +167,8 @@ export const getStudentsPeriods = (token) => {
     },
   })
     .then((response) => {
-      console.log("HERE");
+      console.log("HERE>");
+
       return response.json();
     })
     .catch((err) => console.log(err));

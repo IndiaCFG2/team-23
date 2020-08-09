@@ -70,8 +70,8 @@ export const createClass = (token, class_data) => {
 //         });
 // };
 
-export const getTeacherByUserID = (token, userId) => {
-  return fetch(`${API}/teacher?user_id=${userId}`, {
+export const getTeacherByUserID = async (token, userId) => {
+  const response = await fetch(`${API}/teacher?user_id=${userId}`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -79,8 +79,12 @@ export const getTeacherByUserID = (token, userId) => {
       Authorization: `${token}`,
     },
   })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => console.log(err));
+  const jsonresp = await response.json()
+  return jsonresp;
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log(data,'dadasdasdasd')
+    //     return data
+    // })
+    // .catch((err) => console.log(err));
 };

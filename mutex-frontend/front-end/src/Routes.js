@@ -8,6 +8,7 @@ import Dashboard from "./user/UserDashboard";
 import AdminRoute from "./auth/AdminRoute";
 import AdminDashboard from "./user/AdminDashboard";
 import TeacherDashboard from "./user/TeacherDashboard";
+import StudentDashboard from "./user/StudentDashboard";
 import AddContents from "./teacher/AddContent";
 import AddTeacher from "./admin/AddTeacher";
 import AddStudent from "./admin/AddStudent";
@@ -16,6 +17,7 @@ import ATRoute from "./auth/ATRoute";
 
 import AddAssessment from "./teacher/AddAssessment";
 import AddClass from "./teacher/AddClass";
+import StudentRoute from "./student/StudentRoute";
 
 const Routes = () => {
   return (
@@ -41,7 +43,14 @@ const Routes = () => {
         />
         <TeacherRoute path="/create/class" exact component={AddClass} />
 
+        <StudentRoute
+          path="/student/dashboard"
+          exact
+          component={StudentDashboard}
+        ></StudentRoute>
+
         <PrivateRoute path="/user/dashboard" exact component={Dashboard} />
+
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/teacher" exact component={AddTeacher} />
       </Switch>
